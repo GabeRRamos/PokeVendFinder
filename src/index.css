@@ -13,7 +13,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  background-image: url('../public/tile7_cleaned.svg'); /* ✅ no ../public */
+  background-image: url('./img/tile7_cleaned.svg'); /* ✅ no ../public */
   background-repeat: repeat;
   background-size: 215.26px 108.52px;
   background-position: top left;
