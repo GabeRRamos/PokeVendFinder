@@ -1,10 +1,23 @@
 .App {
   text-align: center;
+  min-height: 100%;
 }
 
 .App-logo {
-  height: 40vmin;
   pointer-events: none;
+}
+
+header {
+  background-image: linear-gradient(#319dff, #70afe2);;
+  margin: auto -16px;
+  padding: 16px 32px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+  color: #fff;
+  font-family: "McLaren", cursive;
+  font-weight: 200;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,14 +27,15 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  background-color: transparent; /* ✅ good */
+  padding: 32px 0;
 }
 
 .App-link {
@@ -35,4 +49,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+/* sizing of map */
+
+.leaflet-container{
+  height: 80vh;
+  width: 80%;
+  margin: auto;
 }
