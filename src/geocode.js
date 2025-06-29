@@ -1,4 +1,4 @@
-import vendingData from "./vendingData.js" // adjust path if needed
+import vendingData from "./vendingData_tx_ut_co_tn_ky+il+wis+in+mi+oh.js" // adjust path if needed
 import opencage from 'opencage-api-client';
 import fs from 'fs';
 
