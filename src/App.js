@@ -3,6 +3,7 @@ import Header from "./components/Header.jsx";
 import "leaflet/dist/leaflet.css";
 import {MapContainer, Marker, TileLayer, Popup} from "react-leaflet";
 import {Icon} from "leaflet";
+import markers from "./vendingDataWithCoords";
 
 const testMarkers = [
   {
@@ -13,11 +14,19 @@ const testMarkers = [
   },
 ]
 
+
 const customIcon = new Icon({
   iconUrl: require('./img/pokeball.svg.png'),
   iconSize: [32,32]
 })
 
+function createMarker (marker){
+  return (
+    <Marker position={[marker.lat, marker.lng]} icon={customIcon}>
+      <Popup>{marker.address}</Popup>
+    </Marker>
+  )
+}
 
 function App() {
   return (
@@ -29,12 +38,14 @@ function App() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {
-          testMarkers.map(marker=>(
-            <Marker position={marker.geocode} icon={customIcon}>
-              <Popup>{<a href={marker.hyperLink} target="_blank" rel="noopener noreferrer">{marker.address}</a>}</Popup>
-            </Marker>
-          ))
-        }
+          // testMarkers.map(marker=>(
+          //   <Marker position={marker.geocode} icon={customIcon}>
+          //     {/* <Popup>{<a href={marker.hyperLink} target="_blank" rel="noopener noreferrer">{marker.address}</a>}</Popup> */
+          //     <Popup>{marker.address}</Popup>}
+          //   </Marker>
+          // ))
+          markers.map(createMarker)
+        };
       </MapContainer>
       <p>
         Edit <code>src/App.js</code> and save to reload.
