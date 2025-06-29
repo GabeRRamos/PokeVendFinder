@@ -5,14 +5,14 @@ import {MapContainer, Marker, TileLayer, Popup} from "react-leaflet";
 import {Icon} from "leaflet";
 import markers from "./vendingDataWithCoords";
 
-const testMarkers = [
-  {
-    geocode: [34.15522319337796, -118.2447133],
-    popUp: "Hello from the VM #1!",
-    address: "561 N Glendale Ave Glendale, CA",
-    hyperLink: "https://www.google.com/maps/place/Vons/@34.1495057,-118.2736452,14672m/data=!3m2!1e3!5s0x80c2c1aed243401f:0x6349a580da1c3cee!4m6!3m5!1s0x80c2c1aecf011757:0x85a4f61dca22378a!8m2!3d34.1549844!4d-118.2448076!16s%2Fg%2F1tf24bs9?entry=ttu&g_ep=EgoyMDI1MDYyMy4yIKXMDSoASAFQAw%3D%3D"
-  },
-]
+
+// const testMarkers = [
+//   {
+//     geocode: [34.15522319337796, -118.2447133],
+//     address: "561 N Glendale Ave Glendale, CA",
+//     hyperLink: "https://www.google.com/maps/place/Vons/@34.1495057,-118.2736452,14672m/data=!3m2!1e3!5s0x80c2c1aed243401f:0x6349a580da1c3cee!4m6!3m5!1s0x80c2c1aecf011757:0x85a4f61dca22378a!8m2!3d34.1549844!4d-118.2448076!16s%2Fg%2F1tf24bs9?entry=ttu&g_ep=EgoyMDI1MDYyMy4yIKXMDSoASAFQAw%3D%3D"
+//   },
+// ]
 
 
 const customIcon = new Icon({
@@ -23,7 +23,7 @@ const customIcon = new Icon({
 function createMarker (marker){
   return (
     <Marker position={[marker.lat, marker.lng]} icon={customIcon}>
-      <Popup>{marker.address}</Popup>
+      <Popup>{<a href={`https://www.google.com/maps?q=${marker.lat},${marker.lng}`} target="_blank" rel="noopener noreferrer">{marker.address}</a>}</Popup>
     </Marker>
   )
 }
@@ -38,12 +38,17 @@ function App() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {
+          /* This tests a singular location */
+          //
+          //
           // testMarkers.map(marker=>(
           //   <Marker position={marker.geocode} icon={customIcon}>
           //     {/* <Popup>{<a href={marker.hyperLink} target="_blank" rel="noopener noreferrer">{marker.address}</a>}</Popup> */
           //     <Popup>{marker.address}</Popup>}
           //   </Marker>
           // ))
+
+
           markers.map(createMarker)
         };
       </MapContainer>
