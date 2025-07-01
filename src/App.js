@@ -23,7 +23,18 @@ const customIcon = new Icon({
 function createMarker (marker){
   return (
     <Marker position={[marker.lat, marker.lng]} icon={customIcon}>
-      <Popup>{<a href={`https://www.google.com/maps?q=${marker.lat},${marker.lng}`} target="_blank" rel="noopener noreferrer">{marker.address}</a>}</Popup>
+      <Popup>
+        <div className='Popup'>
+          {marker.retailer}
+          <br/>
+          {"Id: " + marker.machineId}
+          <br/>
+          <a href={`https://www.google.com/maps?q=${marker.lat},${marker.lng}`} 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >{marker.address}</a>
+        </div>
+        </Popup>
     </Marker>
   )
 }
