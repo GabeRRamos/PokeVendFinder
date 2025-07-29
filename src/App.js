@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import {MapContainer, Marker, TileLayer, Popup} from "react-leaflet";
 import {Icon} from "leaflet";
 import markers from "./vendingDataWithCoords";
+import UserLocationMarker from './components/UserLocation';
 
 
 // const testMarkers = [
@@ -43,6 +44,9 @@ function App() {
   return (
     <div className="App">
       <Header/>
+      <div className="sidebar">
+        Dropdown bar
+      </div>
       <MapContainer center={[34.0549,-118.2426]} zoom={8}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -62,6 +66,7 @@ function App() {
 
           markers.map(createMarker)
         };
+        <UserLocationMarker/>
       </MapContainer>
       <p>
         Edit <code>src/App.js</code> and save to reload.
