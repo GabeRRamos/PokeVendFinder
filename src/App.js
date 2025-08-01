@@ -5,6 +5,8 @@ import {MapContainer, Marker, TileLayer, Popup} from "react-leaflet";
 import {Icon} from "leaflet";
 import markers from "./vendingDataWithCoords";
 import UserLocationMarker from './components/UserLocation';
+import Dropdown from './components/Dropdown/Dropdown';
+import DropdownItem from './components/DropdownItem/DropdownItem';
 
 
 // const testMarkers = [
@@ -20,6 +22,8 @@ const customIcon = new Icon({
   iconUrl: require('./img/pokeball.svg.png'),
   iconSize: [32,32]
 })
+const states = ["AZ","CA","CO","FL","GA","IL","IN","KY","LA","MD","MI","MN","MO","NV","NJ","NY","NC","OH","OR","PA","TN","TX","UT","VA","WA","WI"];
+
 
 function createMarker (marker){
   return (
@@ -45,7 +49,15 @@ function App() {
     <div className="App">
       <Header/>
       <div className="sidebar">
-        Dropdown bar
+        <Dropdown 
+          buttonText="Dropdown button" 
+          content={<>
+              {
+                states.map(state=> <DropdownItem key={state}>{state}</DropdownItem>)
+              }
+            </>
+          }
+        />
       </div>
       <MapContainer center={[34.0549,-118.2426]} zoom={8}>
         <TileLayer
