@@ -3,94 +3,80 @@ import Header from "./components/Header.jsx";
 import "leaflet/dist/leaflet.css";
 import {MapContainer, Marker, TileLayer, Popup} from "react-leaflet";
 import {Icon} from "leaflet";
-import markers from "./vendingDataWithCoords";
+import markers, {states, stateCenters} from "./vendingDataWithCoords";
 import UserLocationMarker from './components/UserLocation';
 import Dropdown from './components/Dropdown/Dropdown';
 import DropdownItem from './components/DropdownItem/DropdownItem';
-
-
-// const testMarkers = [
-//   {
-//     geocode: [34.15522319337796, -118.2447133],
-//     address: "561 N Glendale Ave Glendale, CA",
-//     hyperLink: "https://www.google.com/maps/place/Vons/@34.1495057,-118.2736452,14672m/data=!3m2!1e3!5s0x80c2c1aed243401f:0x6349a580da1c3cee!4m6!3m5!1s0x80c2c1aecf011757:0x85a4f61dca22378a!8m2!3d34.1549844!4d-118.2448076!16s%2Fg%2F1tf24bs9?entry=ttu&g_ep=EgoyMDI1MDYyMy4yIKXMDSoASAFQAw%3D%3D"
-//   },
-// ]
+import {useRef } from 'react';
 
 
 const customIcon = new Icon({
   iconUrl: require('./img/pokeball.svg.png'),
   iconSize: [32,32]
 })
-const states = ["AZ","CA","CO","FL","GA","IL","IN","KY","LA","MD","MI","MN","MO","NV","NJ","NY","NC","OH","OR","PA","TN","TX","UT","VA","WA","WI"];
 
 
-function createMarker (marker){
-  return (
-    <Marker position={[marker.lat, marker.lng]} icon={customIcon}>
-      <Popup>
-        <div className='Popup'>
-          {marker.retailer}
-          <br/>
-          {"Id: " + marker.machineId}
-          <br/>
-          <a href={`https://www.google.com/maps?q=${marker.lat},${marker.lng}`} 
-            target="_blank" 
-            rel="noopener noreferrer"
-          >{marker.address}</a>
-        </div>
-        </Popup>
-    </Marker>
-  )
-}
 
 function App() {
+  const mapRef = useRef(null);
+
+  function createMarker (marker){
+
+    return (
+      <Marker position={[marker.lat, marker.lng]} icon={customIcon}>
+        <Popup>
+          <div className='Popup'>
+            {marker.retailer}
+            <br/>
+            {"Id: " + marker.machineId}
+            <br/>
+            <a href={`https://www.google.com/maps?q=${marker.lat},${marker.lng}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >{marker.address}</a>
+          </div>
+          </Popup>
+      </Marker>
+    )
+  }
+
+  function handleClick(state){
+    console.log(`${state} was clicked `);
+    const coords = stateCenters[state];
+    if (mapRef.current) {
+      mapRef.current.setView(coords, 7);
+      console.log(`✅ Moved to ${state}`);
+    } else {
+      console.warn("⚠️ Map not ready yet");
+    }
+  }
   return (
     <div className="App">
       <Header/>
       <div className="sidebar">
         <Dropdown 
-          buttonText="Dropdown button" 
+          buttonText="Select a State" 
           content={<>
               {
-                states.map(state=> <DropdownItem key={state}>{state}</DropdownItem>)
+                states.map((state, index)=> <DropdownItem key={index} onClick={() => handleClick(state)}>{state}</DropdownItem>)
               }
             </>
           }
         />
       </div>
-      <MapContainer center={[34.0549,-118.2426]} zoom={8}>
+      <MapContainer className='leaflet-container' center={[70.0549, -118.2426]}
+        zoom={8}
+        ref={mapRef}
+        >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {
-          /* This tests a singular location */
-          //
-          //
-          // testMarkers.map(marker=>(
-          //   <Marker position={marker.geocode} icon={customIcon}>
-          //     {/* <Popup>{<a href={marker.hyperLink} target="_blank" rel="noopener noreferrer">{marker.address}</a>}</Popup> */
-          //     <Popup>{marker.address}</Popup>}
-          //   </Marker>
-          // ))
-
-
           markers.map(createMarker)
-        };
+        }
         <UserLocationMarker/>
       </MapContainer>
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
     </div>
   );
 }
