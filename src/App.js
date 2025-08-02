@@ -50,6 +50,7 @@ function App() {
       console.warn("⚠️ Map not ready yet");
     }
   }
+  
   return (
     <div className="App">
       <Header/>
